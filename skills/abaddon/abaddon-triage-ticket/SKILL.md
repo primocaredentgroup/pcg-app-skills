@@ -37,7 +37,7 @@ When blocked, prepare a **private-comment draft** containing:
 
 Use only the escalation contacts returned by an authorized application configuration. If none are available, ask the user to select a reviewer. Do not infer agents, addresses or mention identifiers from unrelated tickets, names in prose or this public repository.
 
-Label the text as a draft and state that it has not been posted. This skill has no posting or email-sending step. If another workflow later publishes it, that workflow must enforce private visibility, current ticket access and authorized mentions. Do not substitute a public comment or email when private posting is unavailable.
+Label the text as a draft and state that it has not been posted. This skill has no posting or email-sending step. If delegated work includes posting and `abaddon-work-ticket` is installed, use that workflow only with the connection's advertised work capabilities and explicit permissions. Otherwise retain the draft. Do not substitute a public comment or email when private posting is unavailable.
 
 ## Evidence and review
 
