@@ -10,7 +10,7 @@ This repository contains portable instructions that AI agents can download and i
 | --- | --- | ---: |
 | Global | [`skills/global`](skills/global) | 0 |
 | Innovation Sax | [`skills/innovation-sax`](skills/innovation-sax) | 0 |
-| Abaddon | [`skills/abaddon`](skills/abaddon) | 0 |
+| Abaddon | [`skills/abaddon`](skills/abaddon) | 2 |
 
 ## Repository contract
 

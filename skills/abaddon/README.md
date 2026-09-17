@@ -2,4 +2,13 @@
 
 Skills for Abaddon workflows, terminology, and supported operations belong here.
 
-No Abaddon skills are published yet. Future skill names must start with `abaddon-`.
+| Skill | Use |
+| --- | --- |
+| [`abaddon-read-tickets`](abaddon-read-tickets/SKILL.md) | Retrieve and summarize authorized ticket context or assigned-ticket lists. |
+| [`abaddon-triage-ticket`](abaddon-triage-ticket/SKILL.md) | Analyze a request, select relevant available application skills and prepare clarification or review drafts. |
+
+These skills use an existing authorized MCP connection. They contain no server addresses, credentials or client-specific setup, and installing them does not grant application access. They discover the connection's supported operations instead of assuming a particular tool name or AI host.
+
+Both skills are read-only. A draft is not a posted comment, an accepted assignment or a ticket status change. If a needed capability is unavailable, they report the limitation. Application-specific operations belong to that application's own skill and authorization boundary.
+
+Install either directory independently, including any files inside it. See the repository's installation instructions. Pin a commit when a reproducible version is required. All skill names in this directory begin with `abaddon-`.
