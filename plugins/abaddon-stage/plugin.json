@@ -1,0 +1,13 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "abaddon-stage",
+  "version": "0.1.0-stage.1",
+  "description": "Read, triage, and work on authorized Abaddon staging tickets through a remote MCP connection.",
+  "author": {
+    "name": "Primo Caredent Group"
+  },
+  "homepage": "https://github.com/primocaredentgroup/pcg-app-skills/tree/main/plugins/abaddon-stage",
+  "repository": "https://github.com/primocaredentgroup/pcg-app-skills",
+  "license": "MIT",
+  "keywords": ["abaddon", "tickets", "staging", "mcp"]
+}

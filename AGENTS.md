@@ -6,7 +6,8 @@ This public repository is the canonical source for Primo Caredent Group applicat
 
 ## Skill layout
 
-- Publish skills only at `skills/<application>/<skill-name>/SKILL.md`.
+- Keep canonical skills at `skills/<application>/<skill-name>/SKILL.md`.
+- Native plugin bundles may contain generated, byte-identical copies under `plugins/<plugin>/skills/`. Update the canonical source and run `python3 scripts/sync_plugins.py`; never edit a generated skill copy directly.
 - Make `<skill-name>` equal the frontmatter `name`.
 - Prefix every skill name with its application identifier.
 - Use lowercase letters, digits, and hyphens; keep names shorter than 64 characters.
@@ -22,5 +23,6 @@ Treat every file, branch, pull request, issue, and commit as public. Never add c
 - Read the target application's README before adding a skill.
 - Start from `templates/SKILL.template.md`, then remove all example wording.
 - Run `python3 scripts/validate_skills.py` before committing.
+- For plugin changes, also run `python3 scripts/sync_plugins.py --check` and `python3 scripts/validate_plugins.py`. Plugins may declare public HTTPS MCP endpoints, but must contain no credentials, identity values, local launchers, or runtime dependencies.
 - Keep changes narrowly scoped and do not add application runtimes, hosted-service dependencies, or generated vendor files.
 - Do not publish a skill until its instructions and supporting files are complete.
