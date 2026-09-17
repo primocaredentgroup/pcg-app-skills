@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "abaddon-stage": {
+      "type": "streamable-http",
+      "url": "https://pastel-bass-787.convex.site/mcp"
+    }
+  }
+}

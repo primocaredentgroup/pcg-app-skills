@@ -23,6 +23,8 @@ Contributions are welcome through pull requests.
 
 ## Public-content review
 
+Native plugin bundles contain generated copies of canonical skills. After editing a bundled skill, run `python3 scripts/sync_plugins.py`. Validate with `python3 scripts/sync_plugins.py --check` and `python3 scripts/validate_plugins.py` as well as the skill validator. Public HTTPS MCP endpoints are allowed in reviewed plugin metadata; credentials, identity values, local launchers, and runtime dependencies are not.
+
 Before committing, confirm that every added line is suitable for unrestricted public distribution. Never include:
 
 - credentials, access tokens, private keys, passwords, or session material;

@@ -2,7 +2,7 @@
 
 Public, canonical Agent Skills for Primo Caredent Group applications.
 
-This repository contains portable instructions that AI agents can download and install directly from GitHub. Skills are grouped by the application they support and do not require a shared runtime, hosted service, or authentication layer.
+This repository contains portable instructions that AI agents can download and install directly from GitHub. Skills are grouped by the application they support. The skill files are independently installable; access to an application's live data requires its authorized connection.
 
 ## Applications
 
@@ -66,10 +66,18 @@ https://raw.githubusercontent.com/primocaredentgroup/pcg-app-skills/main/skills/
 
 Pin a commit SHA instead of `main` when reproducibility is required.
 
+## Native plugins
+
+[`abaddon-stage`](plugins/abaddon-stage/README.md) bundles the three canonical Abaddon skills with a remote HTTPS MCP connection for staging. The repository includes Agent Plugins and Cursor manifests plus a Cursor team marketplace manifest. Each user signs in through the provider's OAuth flow; package installation does not grant application access.
+
+See the plugin README for the documented Grok connection and team marketplace import routes, and the separate public Marketplace review requirement. Skills under `skills/` remain the canonical source. Plugin skill copies are generated and checked for exact equality.
+
 ## Validate locally
 
 ```bash
 python3 scripts/validate_skills.py
+python3 scripts/sync_plugins.py --check
+python3 scripts/validate_plugins.py
 ```
 
 The same validation runs on every pull request and push to `main`.

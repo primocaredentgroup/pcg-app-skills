@@ -19,3 +19,9 @@ jobs:
 
       - name: Validate skill structure and public-safety checks
         run: python3 scripts/validate_skills.py
+
+      - name: Verify native plugin matches canonical skills
+        run: python3 scripts/sync_plugins.py --check
+
+      - name: Validate staging plugin metadata and remote-only payload
+        run: python3 scripts/validate_plugins.py

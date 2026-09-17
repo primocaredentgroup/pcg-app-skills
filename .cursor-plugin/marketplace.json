@@ -1,0 +1,17 @@
+{
+  "name": "pcg-app-plugins",
+  "owner": {
+    "name": "Primo Caredent Group"
+  },
+  "metadata": {
+    "description": "Native plugins for Primo Caredent Group application skills."
+  },
+  "plugins": [
+    {
+      "name": "abaddon-stage",
+      "source": "plugins/abaddon-stage",
+      "description": "Read, triage, and work on authorized Abaddon staging tickets through a remote MCP connection.",
+      "version": "0.1.0-stage.1"
+    }
+  ]
+}
