@@ -68,7 +68,7 @@ Pin a commit SHA instead of `main` when reproducibility is required.
 
 ## Native plugins
 
-For Abaddon, start with the [direct MCP and skills setup](skills/abaddon/README.md#direct-setup-with-a-bot-api-key). Each owner creates a dedicated assistant credential in the intended Abaddon environment, configures the remote MCP connection in their client, and installs the three skill directories from GitHub. A marketplace is not required. Installing instructions does not grant application access.
+The [Abaddon skill index](skills/abaddon/README.md) describes the three independently installable skills. Installing skill files does not grant application access.
 
 [`abaddon-stage`](plugins/abaddon-stage/README.md) is an optional bundle of the same skills and a fixed staging HTTPS MCP endpoint, with Agent Plugins and Cursor manifests plus a Cursor team marketplace manifest. Its remote manifest contains no API key; authentication must be configured by the host. Do not use that staging manifest for production.
 
