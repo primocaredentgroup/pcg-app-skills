@@ -2,9 +2,17 @@
 
 Native plugin for authorized Abaddon staging tickets. It bundles the canonical read, triage, and delegated-work skills with a direct HTTPS MCP connection. The plugin is a staging prerelease; installing it does not grant access to application data.
 
-The package supports the [Agent Plugins standard](https://agent-plugins.org/plugin-authors/manifest) and includes a [Cursor plugin manifest](https://cursor.com/docs/reference/plugins). OAuth discovery and sign-in are handled by the host and the Abaddon authorization server. No client secret, bearer token, user identifier, local launcher, or installation script is required in the package.
+The package supports the [Agent Plugins standard](https://agent-plugins.org/plugin-authors/manifest) and includes a [Cursor plugin manifest](https://cursor.com/docs/reference/plugins). No client secret, bearer token, user identifier, local launcher, or installation script is stored in the package. Configure authentication separately in the host.
 
-## Install in Grok Bot
+## Direct installation in Grok Bot
+
+A marketplace is not required to connect a bot to Abaddon and install these skills. Follow the [direct MCP and dedicated bot-key setup](../../skills/abaddon/README.md#direct-setup-with-a-bot-api-key): copy the endpoint from the intended Abaddon environment, configure the supported native remote Bearer connection, and install the three complete skill directories from this repository. Reuse an already working MCP connection instead of registering another one.
+
+The `skills/` directories in this bundle are generated copies of the canonical skills. Installing only those directories does not change the server URL or authentication of an existing connection. **The MCP manifests in this bundle point to staging; do not install them as production configuration.** Production needs its own endpoint and a separately issued key.
+
+Check the client's credential-entry behavior before providing a key. A secret card or an environment-variable name is not automatically usable in a remote header. Some clients require a literal key in connector configuration or tool-call parameters; a masked field does not guarantee the value is invisible to the model. The linked guide explains the boundary and verification steps.
+
+## Optional marketplace installation
 
 After an administrator has made the plugin available to the team, open **Plugins** in Grok Bot, find **abaddon-stage**, and add it. Complete **Authorize** or **Authenticate** in the browser, sign in to the intended Abaddon staging account, and review the access being requested. Verify that the plugin appears under **Installed**. These are the provider's [documented connection steps](https://cursor.com/help/grok-bot/connect-plugins).
 
