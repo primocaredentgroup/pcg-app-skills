@@ -40,9 +40,9 @@ For price, laboratory-cost or deletion requests that include completed rows, rea
 
 The ticket reference is nonempty text with no control characters, up to 120 characters. Prices and laboratory costs are finite nonnegative amounts, up to the live schema's maximum. Omit fields not accepted by the selected preview; do not send a percentage, arbitrary payload, SQL, endpoint, actor ID or operation ID.
 
-## Confirmation and recovery tools
+## Confirmation and status tools
 
-- `careplans_execute_operation`: `{ previewId, confirm: true }`. Use the returned preview unchanged and before its advertised expiry, with explicit permission for its operation.
-- `careplans_operation_status`: `{ previewId }`. Retrieve or reconcile the original operation outcome. An unresolved outcome does not authorize a fresh operation or prove that no change occurred.
+- `careplans_execute_operation`: `{ previewId, confirm: true }`. Use the returned preview unchanged and before its advertised expiry, with explicit permission for its operation. Each preview permits only one dispatch. A cached successful receipt does not represent another execution.
+- `careplans_operation_status`: `{ previewId }`. Read the original operation's Careplans record. This does not query the underlying application for a lost receipt. An unresolved outcome holds further changes to the same plan and requires human investigation; do not retry or create a replacement preview. A `reviewed` state records a human assessment, not an execution receipt, and leaves the original preview terminal.
 
 Keep these runtime identifiers private to the authorized task. Neither tool requires raw credentials as an argument.

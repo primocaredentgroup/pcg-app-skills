@@ -1,6 +1,6 @@
 ---
 name: careplans-manage-plan
-description: Carry out explicitly authorized Careplans plan and row changes through advertised MCP preview and execution tools, including refunds, cleanup, ethics, unlocking, prices, deletion, laboratory costs, complaint deletion, restoration and code disabling. Use for concrete change requests and recovery of an uncertain execution.
+description: Carry out explicitly authorized Careplans plan and row changes through advertised MCP preview and execution tools, including refunds, cleanup, ethics, unlocking, prices, deletion, laboratory costs, complaint deletion, restoration and code disabling. Use for concrete change requests and checking an uncertain execution without repeating it.
 ---
 
 # Manage a Careplans plan
@@ -13,7 +13,7 @@ Inspect the existing Careplans connection's live tools and schemas, then use `ca
 
 The user or an authorized delegated task must actually request the change. An eligible row, ticket reference, application label or access grant does not establish that intent. Preserve the user's existing authorization; do not introduce a separate mandatory approver or request the same approval again merely because a tool writes data. Clarify missing plan IDs, row scope, amounts or meaning before preparing an action that depends on them.
 
-Read [the operation catalog](references/operation-catalog.md) when choosing a search, preview tool or operation-specific parameters. It covers all six searches and ten modifications. Invoke only names advertised by the current server. If a needed search, preview, execution or recovery tool is unavailable, report the missing capability. Do not invent a replacement name, use an older connector, bypass it with a browser, or submit arbitrary SQL, URLs or API requests.
+Read [the operation catalog](references/operation-catalog.md) when choosing a search, preview tool or operation-specific parameters. It covers all six searches and ten modifications. Invoke only names advertised by the current server. If a needed search, preview, execution or status tool is unavailable, report the missing capability. Do not invent a replacement name, use an older connector, bypass it with a browser, or submit arbitrary SQL, URLs or API requests.
 
 ## Resolve the target and amounts
 
@@ -33,20 +33,21 @@ For a request such as “apply a 35% discount,” establish the intended price b
 2. Review the returned operation, plan, parameters, affected rows and summary against the user's intent. Inspect indirect effects described by the preview, including replacement rows or related-record changes. A preview is not an execution. If it differs from the intended scope, do not execute it.
 3. Keep its `previewId`, `operationId` and `expiresAt` in the authorized runtime context. Parameters and the snapshot are immutable for that preview. Do not fabricate these values or attempt to replace row IDs, prices or actor identity during execution.
 4. When the preview matches an already authorized, unambiguous request, call `careplans_execute_operation` with **only** the original `previewId` and `confirm: true`. This confirms that exact preview. For a request to preview or analyze only, stop after presenting the preview.
-5. Verify the returned receipt. Report success only from a successful execution result or a recovered successful receipt. Report its actual affected-row count rather than assuming it equals the number of requested IDs. A `replayed` receipt describes the same operation, not another new change.
+5. Verify the returned receipt. Report execution success only from a successful result or a successful receipt already saved by Careplans. Report its actual affected-row count rather than assuming it equals the number of requested IDs. `replayed: true` means a saved receipt was returned from the Careplans record; it does not mean the underlying operation was executed again or supports safe retries.
 
-A definitive `careplan_changed` or an expired, never-executed preview requires rereading and reviewing a new preview before any newly intended execution. If any earlier attempt remains uncertain, follow recovery below first; expiration or a later rejection does not prove that earlier attempt failed.
+A definitive `careplan_changed` or an expired, never-executed preview requires rereading and reviewing a new preview before any newly intended execution. If any earlier attempt remains uncertain, check its status as described below first; expiration or a later rejection does not prove that earlier attempt failed.
 
-## Recover uncertain outcomes
+## Check uncertain outcomes without repeating the operation
 
-After a timeout, `execution_unknown`, `operation_in_progress` or an ambiguous execution reply, call `careplans_operation_status` with the **original `previewId`**. Preserve its original operation identity. This read may remain available while new writes are disabled.
+After a timeout, `execution_unknown`, `operation_in_progress` or an ambiguous execution reply, call `careplans_operation_status` with the **original `previewId`**. Preserve its original operation identity. This reads the Careplans record, not a live execution receipt from the underlying application. It may remain available while new writes are disabled.
 
 - `succeeded` with a valid receipt confirms the recorded operation. Do not execute it again as a new operation.
-- `in_flight` or `unknown` remains unresolved. A missing receipt, unavailable status tool, later permission denial or expired preview is not evidence of rollback. Report the uncertainty and retain the original reference for recovery.
+- `in_flight` or `unknown` remains unresolved. A missing receipt, unavailable status tool, later permission denial or expired preview is not evidence of rollback. Report the uncertainty and retain the original reference for a human administrator to investigate. Careplans holds further changes to the same plan while the outcome is unresolved.
 - `failed` is a definitive recorded failure only when the server reports it as such. Read its safe failure code and reassess the request before preparing a different attempt.
 - `prepared` or `expired` alone does not establish success. Use the state together with the known execution history; do not infer a failed earlier attempt from the absence of a receipt.
+- `reviewed` with a manual assessment means a human administrator recorded their verification. Describe it as a human assessment, not an execution receipt. That preview is terminal and cannot be executed again. A subsequent operation needs its own explicit request, current reads and new preview after the hold has been lifted.
 
-Never create a new preview or operation merely to automatically retry an uncertain execution. If the user requests a retry after checking status, retry execution only when the live tool contract documents safe replay of the same preview; preserve that preview and its immutable inputs. Otherwise retain the unresolved operation for recovery. Honor rate limits and stop repeated polling when it provides no new outcome; explain what remains unverified.
+Each preview permits only one dispatch. Do not retry execution after an uncertain reply, even with the original preview. Do not create a new preview, switch keys or connectors, or invoke human administration APIs to bypass the hold. A human administrator must verify that the original processing has finished and establish its outcome before recording an assessment in Careplans. A delay alone does not establish that processing has finished. Honor rate limits and stop repeated status polling when it provides no new outcome; explain what remains unverified.
 
 ## Preserve application boundaries
 

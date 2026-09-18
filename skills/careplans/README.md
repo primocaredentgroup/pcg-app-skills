@@ -5,7 +5,7 @@ Skills for reading care-plan rows and carrying out explicitly authorized Carepla
 | Skill | Use |
 | --- | --- |
 | [`careplans-read-rows`](careplans-read-rows/SKILL.md) | Search plan rows, completed rows, pending-cleanup rows, ethics rows, restorable rows and code rows. |
-| [`careplans-manage-plan`](careplans-manage-plan/SKILL.md) | Preview and execute the ten supported plan operations, then verify or recover their recorded outcomes. |
+| [`careplans-manage-plan`](careplans-manage-plan/SKILL.md) | Preview and execute the ten supported plan operations, then check their recorded outcomes without retrying an uncertain execution. |
 
 Install either skill directory independently, including its supporting references. The skills inspect the connection's advertised capabilities and permissions. Installation does not grant access, enable writes or make an unavailable tool callable.
 
