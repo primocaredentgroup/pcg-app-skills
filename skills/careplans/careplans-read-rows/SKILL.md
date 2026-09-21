@@ -9,9 +9,9 @@ Retrieve the rows relevant to the user's question and distinguish the requested 
 
 ## Establish the connection and plan
 
-Inspect the configured Careplans connection's advertised tools and schemas. When available, call `careplans_identity` to confirm its environment, read permission and authorized plan IDs. Use only tools actually advertised; an installed skill does not add server capabilities.
+Inspect the configured Careplans connection's advertised tools and schemas. When available, call `careplans_identity` to confirm its environment, read permission and plan scope. `pdcScope: "all"` permits the requested PDC without registering it beforehand; an empty `allowedPdcIds` then does not mean no access. For `pdcScope: "selected"`, or an older identity response listing allowed IDs without a scope, respect that list. Do not infer all-plan access from an empty or missing list alone. Use only tools actually advertised; an installed skill does not add server capabilities.
 
-Use the exact authorized numeric care-plan ID in `careplan_id`. Keep a plan ID distinct from a row ID, ticket reference or patient name. A row-name filter cannot identify a plan. If the plan or environment is ambiguous, clarify it before reading. Do not guess identifiers, widen the authorized plan list, or switch connections after a denial.
+Use the exact numeric care-plan ID from the authorized task in `careplan_id`. Keep a plan ID distinct from a row ID, ticket reference or patient name. A row-name filter cannot identify a plan. If the plan or environment is ambiguous, clarify it before reading. Broad plan access does not authorize scanning unrelated plans. Do not guess identifiers, change access grants, or switch connections after a denial.
 
 ## Choose the relevant search
 

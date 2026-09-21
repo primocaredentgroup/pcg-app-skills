@@ -9,7 +9,7 @@ Perform the requested operation on the exact authorized plan and rows, using a v
 
 ## Establish capability and intent
 
-Inspect the existing Careplans connection's live tools and schemas, then use `careplans_identity` when advertised to verify the intended environment, authorized plan IDs and explicit operation grants. Reads alone do not authorize writes. A grant for one operation does not grant the others, and server-disabled writes remain disabled even when the key has an operation grant.
+Inspect the existing Careplans connection's live tools and schemas, then use `careplans_identity` when advertised to verify the intended environment, plan scope and explicit operation grants. With `pdcScope: "all"`, use the PDC from the authorized request without registering its ID beforehand; an empty `allowedPdcIds` does not restrict that explicit scope. A `selected` scope or an older identity response with an allowed-ID list retains that restriction. Never infer all-plan access from an empty or missing list alone. Reads alone do not authorize writes. A grant for one operation does not grant the others, and server-disabled writes remain disabled even when the key has an operation grant.
 
 The user or an authorized delegated task must actually request the change. An eligible row, ticket reference, application label or access grant does not establish that intent. Preserve the user's existing authorization; do not introduce a separate mandatory approver or request the same approval again merely because a tool writes data. Clarify missing plan IDs, row scope, amounts or meaning before preparing an action that depends on them.
 
