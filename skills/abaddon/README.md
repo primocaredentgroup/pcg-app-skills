@@ -4,9 +4,9 @@ Skills for Abaddon workflows, terminology, and supported operations belong here.
 
 | Skill | Use |
 | --- | --- |
-| [`abaddon-read-tickets`](abaddon-read-tickets/SKILL.md) | Retrieve and summarize authorized ticket context or assigned-ticket lists. |
+| [`abaddon-read-tickets`](abaddon-read-tickets/SKILL.md) | Retrieve authorized ticket context, assignments and explicitly permitted resolved precedents. |
 | [`abaddon-triage-ticket`](abaddon-triage-ticket/SKILL.md) | Analyze a request, select relevant available application skills and prepare clarification or review drafts. |
-| [`abaddon-work-ticket`](abaddon-work-ticket/SKILL.md) | Claim assigned work, write private notes, request clarification and resume after a human reply using explicit work permissions. |
+| [`abaddon-work-ticket`](abaddon-work-ticket/SKILL.md) | Claim assigned work, write private notes, request clarification resume after a human reply and submit completed work for human review using explicit work permissions. |
 
 These skills use an existing authorized MCP connection. They contain no server addresses, credentials or client-specific setup, and installing them does not grant application access. They discover the connection's supported operations instead of assuming a particular tool name or AI host.
 
