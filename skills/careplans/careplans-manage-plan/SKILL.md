@@ -27,6 +27,11 @@ If a request such as “change all rows, including completed rows” spans both 
 
 For a request such as “apply a 35% discount,” establish the intended price basis, affected rows, treatment of completed rows and rounding when those are not already clear. Do not assume a percentage applies to the current net price or convert an ambiguous percentage into a `prezzo` value. When different rows require different verified final amounts, prepare separately scoped operations; do not send a single amount as if it represented a plan-wide percentage.
 
+## Use history as supporting evidence
+
+When the delegated task calls for precedents, use `careplans-read-rows` to consult authorized operational history and `abaddon-read-tickets` for related resolved tickets. Record the source references and distinguish HTTP success, execution receipts and human assessments. A similar historical discount is not an approved rule for the current request. Keep plan IDs, row IDs, amounts and authorization grounded in the current ticket and fresh row reads.
+
+For multiple price groups, verify each operation's receipt and read back the affected rows before continuing to the next group. Refresh the assignment and lease before dispatch when working through Abaddon. If a later step fails, report the successful subset and the blocker; do not label the whole request complete or retry already successful operations.
 ## Preview and execute
 
 1. Call the advertised operation-specific preview with `careplan_id`, the real work reference in `numero_ticket`, and only that operation's required parameters. Row operations use the exact unique `row_ids`; plan-wide operations do not take row IDs. Do not invent a ticket reference or treat it as a Careplans access grant.
