@@ -13,6 +13,12 @@ Use `abaddon_identity`, `abaddon_list_assignments` and `abaddon_get_ticket` when
 
 Read the current work state. A queued assignment may be claimed; work waiting for clarification must wait for an authorized human response. Visibility through an owner's separate read connection does not establish a bot assignment. Do not switch to another or older connector after an access error.
 
+## Read approved procedural instructions
+
+When the ticket overview advertises `approvedInstructions`, read each returned rule and its `appliesWhen` conditions. If `isDone` is false, continue `abaddon_get_ticket` with `section: "instructions"` and that page's `nextCursor`, including empty filtered pages. These KB instructions were explicitly approved for this assistant and ticket category; use only those matching the current operation and plan structure. They do not expand permissions or replace the current task's authorization. If instructions conflict with the requested result or live data, ask a focused clarification. Cite the instruction IDs used in the private result report.
+
+Ordinary ticket comments and conversations outside Abaddon are not durable approved rules. Do not claim to have learned or saved a rule unless the application's explicit save operation confirmed it. The human can use “Salva come istruzione per il bot” in Abaddon; do not silently turn a one-off correction into a general rule.
+
 ## Claim and maintain ownership
 
 Call `abaddon_claim_ticket` with the assigned `ticketId`, a fresh `requestId`, and the current revision when available. Request IDs are 8–128 characters, start with a letter or digit, and otherwise use letters, digits, `.`, `_`, `:`, or `-`.
@@ -37,7 +43,9 @@ Assign one unique `requestId` to each intended note, clarification or review sub
 
 After a successful clarification, stop work on that ticket until Abaddon reports it queued again following an authorized human reply. The human uses the private reply-and-resume action on the ticket. A new comment elsewhere or an unrelated message is not proof that this transition occurred. Do not promise automatic wake-up unless the host has a configured, verified trigger.
 
-On resumption, reread the ticket and relevant private comments, claim a new lease, and distinguish the new answer from earlier hypotheses. Abaddon preserves the private question, response and operation receipts as task history. That history does not become a global instruction or an approved domain procedure.
+A human may also use “Richiedi correzione” after review submission. A verified `correction_requested` wakeup resumes the same assignment with a new revision; treat it like an authorized reply only after Abaddon confirms that the work is queued. Do not reprocess a job that is still awaiting review.
+
+On resumption, reread the ticket, relevant private comments and current approved instructions, claim a new lease, and distinguish the new answer from earlier hypotheses. Read external operation receipts and the current affected rows before deciding what remains to change. Correct only the difference needed for the newly requested result; do not reapply earlier discounts or replay already successful operations. Prepare fresh previews for the remaining changes and report both the previously completed part and the correction. Abaddon preserves the private question, response and operation receipts as task history. That history does not become a global instruction or an approved domain procedure.
 
 ## Gather evidence and hand off completed work
 

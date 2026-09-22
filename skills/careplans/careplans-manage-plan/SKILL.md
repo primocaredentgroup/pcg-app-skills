@@ -27,6 +27,8 @@ If a request such as “change all rows, including completed rows” spans both 
 
 For a request such as “apply a 35% discount,” establish the intended price basis, affected rows, treatment of completed rows and rounding when those are not already clear. Do not assume a percentage applies to the current net price or convert an ambiguous percentage into a `prezzo` value. When different rows require different verified final amounts, prepare separately scoped operations; do not send a single amount as if it represented a plan-wide percentage.
 
+For corrections to an earlier execution, read back current row prices and the original operation receipts first. Derive the remaining changes from the intended final amounts; do not apply the original percentage again to an already discounted net price. When a package contains parent and child rows, establish their relationship and which level the application aggregates. Follow applicable human-approved instructions from the task context, keep excluded or completed rows unchanged, and verify the intended aggregate as well as each changed row. If the available tools cannot establish those relationships or totals, state that limitation instead of reporting the business target as verified.
+
 ## Use history as supporting evidence
 
 When the delegated task calls for precedents, use `careplans-read-rows` to consult authorized operational history and `abaddon-read-tickets` for related resolved tickets. Record the source references and distinguish HTTP success, execution receipts and human assessments. A similar historical discount is not an approved rule for the current request. Keep plan IDs, row IDs, amounts and authorization grounded in the current ticket and fresh row reads.
